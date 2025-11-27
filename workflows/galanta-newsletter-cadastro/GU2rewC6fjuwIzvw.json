@@ -1,0 +1,252 @@
+{
+  "": "",
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-23T18:45:23.303Z",
+  "id": "GU2rewC6fjuwIzvw",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "galanta-newsletter-cadastro",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "newsletter-clube-coracao",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7368d8d1-3ebc-4be5-9aa7-01aa07d54781",
+      "name": "Webhook",
+      "webhookId": "37c20904-7ee2-4e3a-b13c-23b51205e313"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5ecb2262-46f6-4bd3-a117-328392d1d9ac",
+              "name": "nome",
+              "value": "={{ $json.body.customer.name }}",
+              "type": "string"
+            },
+            {
+              "id": "63162110-db92-4b2c-bc0e-5f07c14bace0",
+              "name": "email",
+              "value": "={{ $json.body.customer.email }}",
+              "type": "string"
+            },
+            {
+              "id": "c0fbf9b8-ccf8-4559-845b-2bf7c2da5067",
+              "name": "time",
+              "value": "={{ $json.body.customer.team }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "2a4bc3d6-484b-43cc-a9c9-e89db2edae2e",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "fromEmail": "dev@clubecoracao.com.br",
+        "toEmail": "={{ $('Edit Fields').item.json.email }}",
+        "subject": "=Agradecemos seu contato, {{ $('Edit Fields').item.json.nome }}",
+        "html": "={{ $json.html }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        624,
+        0
+      ],
+      "id": "90f46453-723a-4b7c-8b01-10b690f8a65f",
+      "name": "Send email",
+      "webhookId": "163f3671-abc5-4085-96ab-e061dc5ed7b5",
+      "credentials": {
+        "smtp": {
+          "id": "fZJbSsP3UfbIRLTB",
+          "name": "SMTP account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "html": "<!DOCTYPE html>\n<html lang=\"pt-br\">\n<head>\n  <meta charset=\"UTF-8\" />\n  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n  <title>Newsletter - Clube Coração</title>\n  <style>\n    @font-face {\n      font-family: \"Conthrax\";\n      font-style: italic;\n      font-weight: 600;\n      src: url(\"https://cdn.shopify.com/s/files/1/0700/7361/4490/files/Conthrax_SemiBold_Italic.woff2?v=1761330068\") format(\"woff2\");\n    }\n    @font-face {\n      font-family: \"Conthrax\";\n      font-style: italic;\n      font-weight: 400;\n      src: url(\"https://cdn.shopify.com/s/files/1/0700/7361/4490/files/Conthrax_Book_Italic.woff2?v=1761330068\") format(\"woff2\");\n    }\n\n    .conthrax {\n      font-family: \"Conthrax\", \"Helvetica Neue\", Arial, sans-serif;\n      font-style: normal;\n    }\n  </style>\n</head>\n<body style=\"margin:0;padding:0;background:#e9ecef;font-family:Arial,sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;\">\n  <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"min-width:100%;background:#e9ecef;\">\n    <tr>\n      <td align=\"center\">\n        <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\" style=\"max-width:980px;margin:0 auto;\">\n          <tr>\n            <td align=\"center\" style=\"padding:40px 0;\">\n              <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"680\" style=\"width:680px;max-width:100%;background:#ffffff;border-radius:14px;overflow:hidden;border:1px solid rgba(0,0,0,0.04);box-shadow:0 10px 30px rgba(0,0,0,0.06);\">\n\n                <tr>\n                  <td style=\"padding:38px 0;text-align:center;background:#e9ecef;border-bottom:6px solid #a67c39;\">\n                    <img src=\"https://clube-coracao.myshopify.com/cdn/shop/t/2/assets/logo-clube-coracao.svg?v=170469129230770227211757592853\" alt=\"Clube Coração\" style=\"width:240px;height:auto;display:block;border:0;outline:none;text-decoration:none;margin:0 auto;\" />\n                  </td>\n                </tr>\n\n                <tr>\n                  <td style=\"padding:36px 40px;text-align:center;background:#ffffff;\">\n\n                    <table role=\"presentation\" width=\"100%\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;margin-bottom:30px;\">\n                      <tr>\n                        <td align=\"center\">\n                          <table role=\"presentation\" cellpadding=\"0\" cellspacing=\"0\" style=\"border-collapse:collapse;display:inline-table;\">\n                            <tr>\n                              <td align=\"center\" valign=\"middle\" style=\"padding-right:8px;\">\n                                <img src=\"https://cdn.shopify.com/s/files/1/0700/7361/4490/files/icone-check-newsletter.svg?v=1761329431\" alt=\"Check\" style=\"width:70px;height:40px;display:block;border:0;outline:none;text-decoration:none;\" />\n                              </td>\n                              <td align=\"center\" style=\"text-align:center;\">\n                                <div class=\"conthrax\" style=\"font-size:22px;font-weight:bold;color:#746d6d;margin-bottom:6px;\">NEWSLETTER</div>\n                                <div class=\"conthrax\" style=\"font-size:22px;font-weight:bold; display:inline-block; color:#a67c39;\">CADASTRADA</div>\n                              </td>\n                            </tr>\n                          </table>\n                        </td>\n                      </tr>\n                    </table>\n\n                    <p style=\"color:#7f7f83;font-size:18px;font-style:italic;margin:8px 0;\">\n                      Olá, {{ $json.nome }}!\n                    </p>\n                    <p style=\"color:#7f7f83;font-size:18px;font-style:italic;line-height:1.6;margin:8px 0;\">\n                      Que bom ter um(a) torcedor(a) do <strong>{{ $json.time }}</strong> com a gente!<br/>\n                      Sua assinatura foi cadastrada com sucesso!<br />\n                      Agora você estará por dentro de todas as nossas ofertas e<br />\n                      novidades imperdíveis, confira agora mesmo!\n                    </p>\n\n                    <p style=\"color:#7f7f83;font-size:18px;font-style:italic;margin:24px 0 8px 0;\">\n                      Ah! E não deixe de aproveitar esse cupom exclusivo do mês,<br />\n                      válido até o dia 30/09/2025.\n                    </p>\n\n                    <div class=\"conthrax\" style=\"font-size:20px;font-weight:bold;font-style:italic;color:#705830;margin-top:24px;\">CUPOM:</div>\n                    <div class=\"conthrax coupon\" data-team=\"{{ $json.time }}\" style=\"font-size:40px;font-weight:bold;color:#705830;letter-spacing:2px;font-style:italic;margin-bottom:20px;\">{{ $json.time.normalize(\"NFD\").replace(/[\\u0300-\\u036f]/g, \"\").replace(/\\s/g, \"\").toUpperCase() }}15</div>\n\n                    <a class=\"conthrax\" href=\"https://clube-coracao.myshopify.com/\" target=\"_blank\" style=\"display:inline-block;margin-top:20px;background:linear-gradient(90deg, #805731 0%, #a67c39 50%, #d9b36b 100%);color:white;padding:14px 36px;border-radius:28px;text-decoration:none;font-weight:bold;letter-spacing:1px;font-size:16px;\">\n                      CLIQUE AQUI PARA IR AO SITE\n                    </a>\n\n                    <p style=\"color:#9e9ea0;font-size:14px;font-style:italic;margin-top:28px;\">\n                      Dúvidas? entre em contato conosco por um de nossos<br /> canais de atendimento\n                    </p>\n\n                    <p style=\"color:#9e9ea0;font-size:14px;font-style:italic;margin-top:12px;\">\n                      PS: Aqui no Clube Coração, todo torcedor do <strong>{{ $json.time }}</strong> já entra marcando um golaço! ⚽💛\n                    </p>\n                  </td>\n                </tr>\n\n                <tr>\n                  <td style=\"background:#e9ecef;text-align:center;border-top:4px solid #a67c39;padding:18px 0;\">\n                    <a href=\"https://api.whatsapp.com/send/?phone=5518987639090&text&type=phone_number&app_absent=0\" target=\"_blank\" style=\"text-decoration:none;display:inline-block;margin:0 8px;\">\n                      <img src=\"https://cdn.shopify.com/s/files/1/0700/7361/4490/files/icone-whatsapp-newsletter.svg?v=1761329461\" alt=\"WhatsApp\" style=\"width:22px;height:22px;display:inline-block;border:0;outline:none;text-decoration:none;\" />\n                    </a>\n                    <a href=\"https://www.instagram.com/clubecoracao/\" target=\"_blank\" style=\"text-decoration:none;display:inline-block;margin:0 8px;\">\n                      <img src=\"https://cdn.shopify.com/s/files/1/0700/7361/4490/files/icone-instagram-newsletter.svg?v=1761329449\" alt=\"Instagram\" style=\"width:22px;height:22px;display:inline-block;border:0;outline:none;text-decoration:none;\" />\n                    </a>\n                    <a href=\"mailto:contato@clubecoracao.com.br\" style=\"text-decoration:none;display:inline-block;margin:0 8px;\">\n                      <img src=\"https://cdn.shopify.com/s/files/1/0700/7361/4490/files/icone-email-newsletter.svg?v=1761329415\" alt=\"E-mail\" style=\"width:22px;height:22px;display:inline-block;border:0;outline:none;text-decoration:none;\" />\n                    </a>\n                  </td>\n                </tr>\n\n              </table>\n            </td>\n          </tr>\n        </table>\n      </td>\n    </tr>\n  </table>\n</body>\n</html>\n"
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "5f831164-49a0-426a-8482-0a2397c62341",
+      "name": "HTML"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-hook.galanta.com.br",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+            "content-length": "1260",
+            "accept": "application/json",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "content-type": "application/json",
+            "origin": "https://clube-coracao.myshopify.com",
+            "priority": "u=1, i",
+            "referer": "https://clube-coracao.myshopify.com/",
+            "sec-ch-ua": "\"Google Chrome\";v=\"141\", \"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"141\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Windows\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-form-version": "1.0",
+            "x-forwarded-for": "187.33.207.63",
+            "x-forwarded-host": "n8n-hook.galanta.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "84e4434b0fa3",
+            "x-newsletter-source": "clube-coracao-fc",
+            "x-real-ip": "187.33.207.63"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "customer": {
+              "name": "Marcelo de Camargo Filho",
+              "email": "marcelodecamargofilho@gmail.com",
+              "team": "São Paulo",
+              "team_handle": "sao-paulo",
+              "team_selected": true,
+              "tags": "newsletter, coracao-fc",
+              "marketing": false,
+              "body": "Cadastro via newsletter do site"
+            },
+            "terms": {
+              "accepted": true,
+              "timestamp": "2025-10-30T17:22:47.281Z"
+            },
+            "technical": {
+              "date": "30/10/2025, 14:22:47",
+              "timestamp": 1761844967291,
+              "iso_date": "2025-10-30T17:22:47.291Z",
+              "timezone": "America/Sao_Paulo",
+              "form_version": "1.0",
+              "validation_passed": true
+            },
+            "device": {
+              "user_agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+              "language": "pt-BR",
+              "platform": "Win32",
+              "screen_resolution": "1920x1080",
+              "viewport_size": "1920x945"
+            },
+            "session": {
+              "referrer": "https://clube-coracao.myshopify.com/",
+              "source": "newsletter-clube-coracao",
+              "page_url": "https://clube-coracao.myshopify.com/collections/sao-paulo?view=areaClube",
+              "page_title": "São Paulo | Clube Coração"
+            },
+            "form_metadata": {
+              "fields": {
+                "name_field": "contact[name]",
+                "email_field": "contact[email]",
+                "team_field": "contact[team]",
+                "tags_field": "contact[tags]",
+                "body_field": "contact[body]",
+                "marketing_field": "contact[accepts_marketing]"
+              },
+              "submission_method": "webhook",
+              "integration_type": "newsletter_clube_coracao"
+            }
+          },
+          "webhookUrl": "https://n8n-hook.galanta.com.br/webhook/newsletter-clube-coracao",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "repo_name": "n8n-ftsflows-bkp",
+  "repo_owner": "thsjn",
+  "repo_path": "workflows/galanta-newsletter-cadastro",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-10-23T18:45:23.303Z",
+      "updatedAt": "2025-10-23T18:45:23.303Z",
+      "role": "workflow:owner",
+      "workflowId": "GU2rewC6fjuwIzvw",
+      "projectId": "975gDJtIeAjuVnY5"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-10-28T19:05:34.876Z",
+      "updatedAt": "2025-10-28T19:05:34.876Z",
+      "id": "0t9rscrhBMb0yJJf",
+      "name": "Marcelo"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-11-18T16:18:52.076Z",
+  "versionId": "f24ce29f-5791-4597-8720-afb1d6f7552f"
+}
