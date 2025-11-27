@@ -1,0 +1,32 @@
+{
+  "": "",
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-11-26T19:17:28.927Z",
+  "id": "qXFf1ugMW1QibfA4",
+  "isArchived": false,
+  "meta": null,
+  "name": "livre",
+  "nodes": [],
+  "pinData": {},
+  "repo_name": "n8n-ftsflows-bkp",
+  "repo_owner": "thsjn",
+  "repo_path": "workflows/livre",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-11-26T19:17:28.927Z",
+      "updatedAt": "2025-11-26T19:17:28.927Z",
+      "role": "workflow:owner",
+      "workflowId": "qXFf1ugMW1QibfA4",
+      "projectId": "975gDJtIeAjuVnY5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-26T19:17:37.586Z",
+  "versionId": "19c22e4b-f28d-4ffa-9139-38d83f49daad"
+}
