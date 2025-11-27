@@ -1,0 +1,276 @@
+{
+  "": "",
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "salva os dados",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "salva os dados": {
+      "main": [
+        [
+          {
+            "node": "enviar o email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-18T16:06:44.463Z",
+  "id": "KeXLGw4e57nhlPcQ",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "biodtech-cadastro-usuario",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bioedtech-novo-usuario",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2d2cc3b3-ecaa-417c-a296-8a8573a66a67",
+      "name": "Webhook",
+      "webhookId": "c173fb81-4ce5-4fab-9a64-20771f8cd588"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "96e44cb1-ef5a-41e0-8991-7a2d5a6268f0",
+              "name": "usuario",
+              "value": "={{ $json.body.username }}",
+              "type": "string"
+            },
+            {
+              "id": "1c59dba3-2e01-4e55-928e-1385f90b8d39",
+              "name": "nome",
+              "value": "={{ $json.body.name }}",
+              "type": "string"
+            },
+            {
+              "id": "363998d5-cd19-429e-a755-8f5ae58aea9f",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "acaa78b5-204d-4ed4-8c58-4226e5c1c55b",
+              "name": "senhaRecuperacao",
+              "value": "={{ $json.body.recoveryCode }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        144,
+        0
+      ],
+      "id": "48b0e336-441d-4be1-b644-786a0ce0a8d6",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1Ccj5lv0LVYjbPQFiAYyjqG48qttMBgXmokll6uhs0CM",
+          "mode": "list",
+          "cachedResultName": "Planilha BiodTech - cadastro de usuario",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Ccj5lv0LVYjbPQFiAYyjqG48qttMBgXmokll6uhs0CM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1Ccj5lv0LVYjbPQFiAYyjqG48qttMBgXmokll6uhs0CM/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "usuario": "={{ $json.usuario }}",
+            "nome": "={{ $json.nome }}",
+            "email": "={{ $json.email }}",
+            "senhaRecuperacao": "={{ $json.senhaRecuperacao }}"
+          },
+          "matchingColumns": [
+            "usuario"
+          ],
+          "schema": [
+            {
+              "id": "usuario",
+              "displayName": "usuario",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "nome",
+              "displayName": "nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "senhaRecuperacao",
+              "displayName": "senhaRecuperacao",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {
+          "cellFormat": "USER_ENTERED"
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        288,
+        0
+      ],
+      "id": "56b7bf3d-69d3-4769-ac9d-87c43151843a",
+      "name": "salva os dados",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "y6rAIvoomP5H6XGv",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "suporte@bioedtech.com.br",
+        "toEmail": "={{ $json.email }}",
+        "subject": "Você foi cadastrado na Biodtech.",
+        "html": "=<!DOCTYPE html>\n<html lang=\"pt-BR\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>Boas-Vindas! Seu Cadastro Foi Finalizado com Sucesso</title>\n</head>\n\n<body style=\"font-family: Arial, sans-serif; background:#f4f4f4; padding:20px; margin:0;\">\n\n<div style=\"max-width:600px; margin:auto; background:#fff; padding:20px; border-radius:8px;\">\n\n    <h1 style=\"color:#007bff; font-size:24px; margin-bottom:20px; text-align:center;\">\n        Boas-Vindas! Seu Cadastro Foi Finalizado com Sucesso\n    </h1>\n\n    <p>Olá <strong>{{ $json.nome }}</strong>, seu cadastro foi concluído com sucesso!</p>\n\n    <div style=\"background:#f9f9f9; border:1px solid #eee; padding:15px; border-radius:6px;\">\n        <p><strong>Seus Dados de Acesso</strong></p>\n        <p>Nome: {{ $json.nome }}</p>\n        <p>Usuário: {{ $json.usuario }}</p>\n        <p>Código de recuperação: <strong>{{ $json.senhaRecuperacao }}</strong></p>\n    </div>\n\n    <br>\n\n    <div style=\"background:#f9f9f9; border:1px solid #eee; padding:15px; border-radius:6px;\">\n        <p><strong>Sobre o Código de Recuperação:</strong></p>\n        <p>Use-o apenas caso esqueça sua senha principal.</p>\n        <p><b>Guarde em um local seguro.</b></p>\n    </div>\n\n    <br>\n\n    <div style=\"background:#f9f9f9; border:1px solid #eee; padding:15px; border-radius:6px;\">\n        <p><strong>Precisa de Ajuda?</strong></p>\n        <p><a href=\"mailto:suporte@bioedtech.com.br\"><strong>suporte@bioedtech.com.br</strong></a></p>\n    </div>\n\n    <br>\n\n    <h3 style=\"text-align:center; margin-top:30px;\">Informações de Contato</h3>\n\n    <table width=\"100%\" cellpadding=\"6\" cellspacing=\"0\" style=\"font-size:14px; line-height:1.4;\">\n        <tr>\n            <td width=\"50%\" style=\"vertical-align:top;\">\n                <img src=\"https://cdn-icons-png.flaticon.com/512/561/561127.png\" width=\"18\" alt=\"E-mail\" style=\"vertical-align:middle;\"> <strong>E-mail:</strong><br>\n                <a href=\"mailto:suporte@bioedtech.com.br\" style=\"color:#007bff; text-decoration:none;\">suporte@bioedtech.com.br</a>\n            </td>\n            <td width=\"50%\" style=\"vertical-align:top;\">\n                <img src=\"https://cdn-icons-png.flaticon.com/512/597/597177.png\" width=\"18\" alt=\"Telefone\" style=\"vertical-align:middle;\"> <strong>Telefone / WhatsApp:</strong><br>\n                <a href=\"tel:+5511911150883\" style=\"color:#007bff; text-decoration:none;\">(11) 91115-0883</a>\n            </td>\n        </tr>\n        <tr>\n            <td width=\"50%\" style=\"vertical-align:top; padding-top:12px;\">\n                <img src=\"https://cdn-icons-png.flaticon.com/512/1827/1827370.png\" width=\"18\" alt=\"Horário\" style=\"vertical-align:middle;\"> <strong>Horário de Atendimento:</strong><br>\n                Seg–Sex | 09h às 17:30\n            </td>\n            <td width=\"50%\" style=\"vertical-align:top; padding-top:12px;\">\n                <img src=\"https://cdn-icons-png.flaticon.com/512/535/535239.png\" width=\"18\" alt=\"Localização\" style=\"vertical-align:middle;\"> <strong>Localização:</strong><br>\n                Rua Otávio Torreli, 406<br>Assis / SP\n            </td>\n        </tr>\n        <tr>\n            <td width=\"50%\" style=\"vertical-align:top; padding-top:12px;\">\n                <img src=\"https://cdn-icons-png.flaticon.com/512/174/174857.png\" width=\"18\" alt=\"LinkedIn\" style=\"vertical-align:middle;\"> <strong>LinkedIn:</strong><br>\n                <a href=\"https://linkedin.com/in/bioedtech\" target=\"_blank\" style=\"color:#007bff; text-decoration:none;\">linkedin.com/in/bioedtech</a>\n            </td>\n            <td width=\"50%\" style=\"vertical-align:top; padding-top:12px;\">\n                <img src=\"https://cdn-icons-png.flaticon.com/512/174/174855.png\" width=\"18\" alt=\"Instagram\" style=\"vertical-align:middle;\"> <strong>Instagram:</strong><br>\n                <a href=\"https://instagram.com/bioedtech3d\" target=\"_blank\" style=\"color:#007bff; text-decoration:none;\">@bioedtech3d</a>\n            </td>\n        </tr>\n    </table>\n\n    <p style=\"margin-top:20px; text-align:center; font-size:12px; color:#777;\">\n        © Todos os direitos reservados.\n    </p>\n\n</div>\n</body>\n</html>\n",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        432,
+        0
+      ],
+      "id": "fe190b05-6ce5-43d1-be74-5b140b6c1ab0",
+      "name": "enviar o email",
+      "webhookId": "f98f171d-37d9-4557-a4eb-fd2db96c0a6a",
+      "credentials": {
+        "smtp": {
+          "id": "B95guyrszWZf2XEh",
+          "name": "SMTP account conta para teste junior"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-hook.galanta.com.br",
+            "user-agent": "axios/1.13.2",
+            "content-length": "228",
+            "accept": "application/json, text/plain, */*",
+            "accept-encoding": "gzip, compress, deflate, br",
+            "content-type": "application/json",
+            "x-forwarded-for": "187.33.206.121",
+            "x-forwarded-host": "n8n-hook.galanta.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "84e4434b0fa3",
+            "x-real-ip": "187.33.206.121"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "userId": "0559fe48-05d5-4dd1-904f-d05e89a81dee",
+            "username": "marcelin",
+            "name": "marcelo",
+            "email": "marcelodecamargofilho@gmail.com",
+            "recoveryCode": "C93C-036E-7310-9C8B",
+            "timestamp": "2025-11-24T19:59:07.580Z",
+            "type": "user_created"
+          },
+          "webhookUrl": "https://n8n-hook.galanta.com.br/webhook/bioedtech-novo-usuario",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "repo_name": "n8n-ftsflows-bkp",
+  "repo_owner": "thsjn",
+  "repo_path": "workflows/biodtech-cadastro-usuario",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-11-18T16:06:44.463Z",
+      "updatedAt": "2025-11-18T16:06:44.463Z",
+      "role": "workflow:owner",
+      "workflowId": "KeXLGw4e57nhlPcQ",
+      "projectId": "975gDJtIeAjuVnY5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-11-25T00:12:38.912Z",
+  "versionId": "b14c0766-2f2c-49e3-b976-37e1c73a840d"
+}
