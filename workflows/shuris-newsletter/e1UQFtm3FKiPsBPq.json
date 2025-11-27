@@ -1,0 +1,171 @@
+{
+  "": "",
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Tratar mensagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tratar mensagem": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-17T16:43:50.695Z",
+  "id": "e1UQFtm3FKiPsBPq",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "shuris-newsletter",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "shuris-newsletter",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -240,
+        -128
+      ],
+      "id": "65de0335-cf3b-4b38-b4d1-5a75fdf7a180",
+      "name": "Webhook",
+      "webhookId": "7fc6c338-6bde-4486-b635-bcd5d3f6c456"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "50bd56e6-6c9b-404c-83bc-5442951c9cd1",
+              "name": "nome",
+              "value": "={{ $json.body.nome }}",
+              "type": "string"
+            },
+            {
+              "id": "d0f9d01d-3bcf-48c3-bbbc-3bda7355faa9",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -32,
+        -128
+      ],
+      "id": "0504b78e-d09b-42dc-a38b-fe5287c11236",
+      "name": "Tratar mensagem"
+    },
+    {
+      "parameters": {
+        "fromEmail": "contato@useshuris.com.br",
+        "toEmail": "={{ $('Tratar mensagem').item.json.email }}",
+        "subject": "=Obrigado por se cadastrar na useShuris, {{ $json.nome }}!",
+        "emailFormat": "text",
+        "text": "=Mensagem de Confirmação de Cadastro\nOlá, {{ $json.nome }}!\n\nSeja muito bem-vindo(a) à useShuris!\n\nObrigado por se cadastrar e fazer parte da nossa comunidade. Fique por dentro de todas as novidades, lançamentos e ofertas exclusivas!\n\nQualquer dúvida, é só nos chamar por aqui!",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        192,
+        -128
+      ],
+      "id": "793243a2-ab59-42c2-a738-eda36dd52521",
+      "name": "Send email",
+      "webhookId": "163f3671-abc5-4085-96ab-e061dc5ed7b5",
+      "credentials": {
+        "smtp": {
+          "id": "y0jOPlVZXSNVQjFV",
+          "name": "SMTP account Use Shuris"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-hook.galanta.com.br",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+            "content-length": "123",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "content-type": "application/json",
+            "origin": "https://loja-shuris.myshopify.com",
+            "priority": "u=1, i",
+            "referer": "https://loja-shuris.myshopify.com/",
+            "sec-ch-ua": "\"Google Chrome\";v=\"141\", \"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"141\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Linux\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-forwarded-for": "187.33.206.121",
+            "x-forwarded-host": "n8n-hook.galanta.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "84e4434b0fa3",
+            "x-real-ip": "187.33.206.121"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "nome": "Junior Stakonikov",
+            "email": "galanta.dev@gmail.com",
+            "origem": "newsletter-shuris",
+            "data": "2025-11-17T18:13:00.810Z"
+          },
+          "webhookUrl": "https://n8n-hook.galanta.com.br/webhook/shuris-newsletter",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "repo_name": "n8n-ftsflows-bkp",
+  "repo_owner": "thsjn",
+  "repo_path": "workflows/shuris-newsletter",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-11-17T16:43:50.695Z",
+      "updatedAt": "2025-11-17T16:43:50.695Z",
+      "role": "workflow:owner",
+      "workflowId": "e1UQFtm3FKiPsBPq",
+      "projectId": "975gDJtIeAjuVnY5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-11-18T16:18:04.982Z",
+  "versionId": "595c8820-e979-4fb9-87d5-eee3336fa46c"
+}
