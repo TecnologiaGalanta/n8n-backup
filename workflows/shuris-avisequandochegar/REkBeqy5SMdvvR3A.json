@@ -1,0 +1,230 @@
+{
+  "": "",
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Tratar mensagem",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tratar mensagem": {
+      "main": [
+        [
+          {
+            "node": "Enviar texto",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-17T16:44:10.954Z",
+  "id": "REkBeqy5SMdvvR3A",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "shuris-avisequandochegar",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "shuris-avise-quando-chegar",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d2ce377e-ac9e-4df9-b730-60d6bceabd77",
+      "name": "Webhook",
+      "webhookId": "a5a87394-6f15-447e-9978-f724c0b24807"
+    },
+    {
+      "parameters": {
+        "resource": "messages-api",
+        "instanceName": "testbot",
+        "remoteJid": "={{ $json.telefone }}",
+        "messageText": "=Olá, tudo bem?\n\nÓtimas notícias! O produto {{ $json.produto_nome }} na cor {{ $json.cor }} e tamanho {{ $json.tamanho }} está fora de estoque.",
+        "options_message": {}
+      },
+      "type": "n8n-nodes-evolution-api.evolutionApi",
+      "typeVersion": 1,
+      "position": [
+        416,
+        -144
+      ],
+      "id": "1cef5b11-6a37-4d0e-9de7-4a61920e5c88",
+      "name": "Enviar texto",
+      "credentials": {
+        "evolutionApi": {
+          "id": "hKrCLbWieRpyOSn6",
+          "name": "Evolution account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "contato@useshuris.com.br",
+        "toEmail": "={{ $('Tratar mensagem').item.json.email }}",
+        "subject": "=useShuris, agradece seu contato!",
+        "emailFormat": "text",
+        "text": "=Olá, tudo bem?\n\nRecebemos sua consulta sobre o produto {{ $json.produto_nome }} (Cor: {{ $json.cor }}, Tamanho: {{ $json.tamanho }}).\n\nInfelizmente, essa combinação esgotou.",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        416,
+        112
+      ],
+      "id": "f000bd22-666b-4d4b-a967-1dfd79a2ba33",
+      "name": "Send email",
+      "webhookId": "163f3671-abc5-4085-96ab-e061dc5ed7b5",
+      "credentials": {
+        "smtp": {
+          "id": "y0jOPlVZXSNVQjFV",
+          "name": "SMTP account Use Shuris"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "e3456dee-1cb5-4287-97b2-f28d7cc25880",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "42b1c888-ee9f-49b7-966d-178f5c019bbf",
+              "name": "telefone",
+              "value": "={{ '55' + $json.body.telefone.toString().replace(/\\D/g, '') }}",
+              "type": "string"
+            },
+            {
+              "id": "1f80c6bf-7330-4a31-936a-fa800c525e7f",
+              "name": "produto_nome",
+              "value": "={{ $json.body.produto_nome }}",
+              "type": "string"
+            },
+            {
+              "id": "5128ec3f-4069-4ece-b26d-558f8f4aaf90",
+              "name": "cor",
+              "value": "={{ $json.body.cor }}",
+              "type": "string"
+            },
+            {
+              "id": "6d16f7b5-c5bf-4372-b178-09fe64b3a1d1",
+              "name": "tamanho",
+              "value": "={{ $json.body.tamanho }}",
+              "type": "string"
+            },
+            {
+              "id": "64e6947a-cb39-43aa-b025-9c10585123dd",
+              "name": "produto_url",
+              "value": "={{ $json.body.produto_url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        0
+      ],
+      "id": "1f7f514e-4be6-4677-b228-9df703ca13f8",
+      "name": "Tratar mensagem"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "n8n-hook.galanta.com.br",
+            "user-agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36",
+            "content-length": "348",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "content-type": "application/json",
+            "origin": "http://127.0.0.1:9292",
+            "priority": "u=1, i",
+            "referer": "http://127.0.0.1:9292/",
+            "sec-ch-ua": "\"Google Chrome\";v=\"141\", \"Not?A_Brand\";v=\"8\", \"Chromium\";v=\"141\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"Linux\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-forwarded-for": "187.33.206.121",
+            "x-forwarded-host": "n8n-hook.galanta.com.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "84e4434b0fa3",
+            "x-real-ip": "187.33.206.121"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "email": "galanta.dev@gmail.com",
+            "telefone": "(18) 99709-1510",
+            "produto_id": 8933111398549,
+            "produto_nome": "Oversized Mi-Kha-El",
+            "produto_handle": "oversized-mi-kha-el",
+            "produto_url": "http://127.0.0.1:9292/products/oversized-mi-kha-el",
+            "cor": "Estonada",
+            "tamanho": "XG",
+            "accepts_email": true,
+            "accepts_whatsapp": true,
+            "timestamp": "2025-11-17T17:48:40.314Z"
+          },
+          "webhookUrl": "https://n8n-hook.galanta.com.br/webhook/shuris-avise-quando-chegar",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "repo_name": "n8n-ftsflows-bkp",
+  "repo_owner": "thsjn",
+  "repo_path": "workflows/shuris-avisequandochegar",
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "createdAt": "2025-11-17T16:44:10.954Z",
+      "updatedAt": "2025-11-17T16:44:10.954Z",
+      "role": "workflow:owner",
+      "workflowId": "REkBeqy5SMdvvR3A",
+      "projectId": "975gDJtIeAjuVnY5"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-11-18T16:17:58.653Z",
+  "versionId": "2339ab6b-7bfc-4c4e-b0c5-8f73b3697272"
+}
